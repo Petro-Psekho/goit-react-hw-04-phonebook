@@ -22,8 +22,6 @@ export default function App() {
   }, [contacts]);
 
   const formSubmitData = data => {
-    console.log(data.name);
-    console.log(contacts);
     const currentName = contacts.find(
       item => item.name.toLowerCase() === data.name.toLowerCase()
     );
@@ -44,7 +42,6 @@ export default function App() {
       contact.name.toLowerCase().includes(normalizedFilter)
     );
   };
-  console.log(contacts);
 
   const deleteContacts = id => {
     console.log(id);
