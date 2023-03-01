@@ -22,19 +22,19 @@ export default function App() {
   }, [contacts]);
 
   const formSubmitData = data => {
+    console.log(data.name);
+    console.log(contacts);
     const currentName = contacts.find(
       item => item.name.toLowerCase() === data.name.toLowerCase()
     );
     if (currentName)
       return alert(currentName.name + ' is already in contacts.');
 
-    setState(prev => ({
-      contacts: [{ ...data, id: nanoid() }, ...prev.contacts],
-    }));
+    setContacts(prevState => [...prevState, { ...data, id: nanoid() }]);
   };
 
   const changeFilter = e => {
-    this.setState({ filter: e.currentTarget.value });
+    setFilter(e.target.value);
   };
 
   const getFilteredContacts = () => {
@@ -44,11 +44,11 @@ export default function App() {
       contact.name.toLowerCase().includes(normalizedFilter)
     );
   };
+  console.log(contacts);
 
   const deleteContacts = id => {
-    setState(prevState => ({
-      contacts: prevState.contacts.filter(contact => contact.id !== id),
-    }));
+    console.log(id);
+    setContacts(prevState => prevState.filter(contact => contact.id !== id));
   };
 
   return (
