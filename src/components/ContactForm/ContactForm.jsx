@@ -1,4 +1,5 @@
-import React from 'react';
+import { useEffect } from 'react';
+// import { number } from 'prop-types';
 import { useForm } from 'react-hook-form';
 
 export const ContactForm = ({ onSubmit }) => {
@@ -7,19 +8,20 @@ export const ContactForm = ({ onSubmit }) => {
     handleSubmit,
     // watch,
     formState: { errors },
+    formState,
+    reset,
   } = useForm({
     defaultValuers: {
       name: '',
       number: '',
     },
   });
-  // const onSubmit = data => {
-  //   console.log(data);
-  // };
 
-  console.log(errors);
-
-  // console.log(watch());
+  useEffect(() => {
+    if (formState.isSubmitSuccessful) {
+      reset();
+    }
+  }, [formState.isSubmitSuccessful, reset]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -29,21 +31,28 @@ export const ContactForm = ({ onSubmit }) => {
         {...register('name', {
           required: 'name is a required field',
           minLength: { value: 3, message: 'min lenght is 3' },
+          pattern: /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/,
         })}
         placeholder="Enter Name"
       />
+
       <p>{errors.name?.message}</p>
 
       <label>Number</label>
       <input
         autoComplete="off"
-        {...register('number', { required: 'number is a required field' })}
+        {...register('number', {
+          required: 'number is a required field',
+          pattern:
+            /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/,
+        })}
         placeholder="Enter Number"
       />
       <p>{errors.number?.message}</p>
 
       {errors.exampleRequired && <p>This field is required</p>}
-      <input type="submit" />
+
+      <button type="submit">Add Contact</button>
     </form>
   );
 };
