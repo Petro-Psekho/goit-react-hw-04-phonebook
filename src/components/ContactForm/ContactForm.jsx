@@ -58,6 +58,7 @@ export const ContactForm = ({ onSubmit }) => {
         <ErrMessage>
           <ErrorMessage name="name" />
         </ErrMessage>
+
         <InputName>
           Number
           <FormInput autoComplete="off" type="tel" name="number" />
