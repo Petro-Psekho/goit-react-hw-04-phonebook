@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-// import { number } from 'prop-types';
 import { useForm } from 'react-hook-form';
 
 export const ContactForm = ({ onSubmit }) => {
@@ -31,7 +30,11 @@ export const ContactForm = ({ onSubmit }) => {
         {...register('name', {
           required: 'name is a required field',
           minLength: { value: 3, message: 'min lenght is 3' },
-          pattern: /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/,
+          pattern: {
+            value: /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/,
+            message:
+              'Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore dArtagnan.',
+          },
         })}
         placeholder="Enter Name"
       />
@@ -43,8 +46,12 @@ export const ContactForm = ({ onSubmit }) => {
         autoComplete="off"
         {...register('number', {
           required: 'number is a required field',
-          pattern:
-            /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/,
+          pattern: {
+            value:
+              /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/,
+            message:
+              'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +.',
+          },
         })}
         placeholder="Enter Number"
       />
