@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { Formik, ErrorMessage } from 'formik';
 import { object, string } from 'yup';
 import {
@@ -33,40 +31,21 @@ const schema = object().shape({
     .required(),
 });
 
-export default function ContactForm(onSubmit) {
-  const [name, setName] = useState('2');
-  const [number, setNumber] = useState('3');
+export const ContactForm = ({ onSubmit }) => {
+  const initialValues = {
+    name: '',
+    number: '',
+  };
 
-  console.log(name);
-  console.log(number);
+  const handleSubmit = (values, { resetForm }) => {
+    onSubmit(values);
 
-  const handleSubmit = event => {
-    console.log(event);
-    console.log(event.target);
-    console.log(event.name);
-    console.log(event.number);
-
-    const { name, number } = event;
-
-    switch (event) {
-      case 'name':
-        setName(name);
-        break;
-
-      case 'number':
-        setNumber(number);
-        break;
-
-      default:
-        return;
-    }
-
-    // resetForm();
+    resetForm();
   };
 
   return (
     <Formik
-      initialValues={{ name, number }}
+      initialValues={initialValues}
       validationSchema={schema}
       onSubmit={handleSubmit}
     >
@@ -92,4 +71,4 @@ export default function ContactForm(onSubmit) {
       </FormWrap>
     </Formik>
   );
-}
+};
